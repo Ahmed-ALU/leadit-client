@@ -16,7 +16,7 @@ const App = () => {
   // From then on, ReactJS maintains separate state that is "in-sync" with the DB.
   useEffect(() => {
     const fetchPosts = async () => {
-      const postsFromServer = await axios.get("http://localhost:4000/posts")
+      const postsFromServer = await axios.get("https://leadit-clone.azurewebsites.net/posts")
       console.log("[DEBUG]: posts received from db:", postsFromServer.data)
       setPostsList(postsFromServer.data)
     }
@@ -31,7 +31,7 @@ const App = () => {
       author_id: author_id,
       author_username: author_username
     }
-    const postAddedToDB = await axios.post("http://localhost:4000/posts/new", newPost)
+    const postAddedToDB = await axios.post("https://leadit-clone.azurewebsites.net/posts/new", newPost)
     console.log("[DEBUG]: POST ADDED: ", postAddedToDB.data)
     setPostsList((prevPostsList) => { // we can access prev. state this way.
       // we don't simply just use 'push' b/c it can lead to race-conditions (read more on S.O.)
@@ -43,7 +43,7 @@ const App = () => {
     navigate("/", { replace: true }); // redirect to home page
   }
   const removePostHandler = async (post_id) => {
-    await axios.post(`http://localhost:4000/posts/delete/${post_id}`)
+    await axios.post(`https://leadit-clone.azurewebsites.net/posts/delete/${post_id}`)
     console.log("[DEBUG]: POST REMOVED")
     setPostsList((prevPostsList) => {
       return prevPostsList.filter(post => post.post_id !== post_id)
